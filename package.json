@@ -1,0 +1,55 @@
+{
+ "name": "fadi-video-studio",
+ "type": "module",
+ "scripts": {
+  "start": "node server.js",
+  "desktop": "electron .",
+  "dist": "electron-builder --win --publish never"
+ },
+ "engines": {
+  "node": ">=20.12"
+ },
+ "version": "1.0.0",
+ "description": "Fadi Video Studio",
+ "main": "main.js",
+ "author": "Fadi",
+ "devDependencies": {
+  "electron": "^33.0.0",
+  "electron-builder": "^25.1.8"
+ },
+ "build": {
+  "appId": "com.fadi.videostudio",
+  "productName": "Fadi Video Studio",
+  "directories": {
+   "output": "dist"
+  },
+  "files": [
+   "main.js",
+   "server.js",
+   "engine.js",
+   "providers.js",
+   "public/**",
+   "build/icon.png"
+  ],
+  "win": {
+   "target": [
+    {
+     "target": "nsis",
+     "arch": [
+      "x64"
+     ]
+    }
+   ],
+   "icon": "build/icon.png",
+   "artifactName": "Fadi-Video-Studio-Setup.${ext}"
+  },
+  "nsis": {
+   "oneClick": false,
+   "allowToChangeInstallationDirectory": true,
+   "createDesktopShortcut": true,
+   "createStartMenuShortcut": true,
+   "shortcutName": "Fadi Video Studio",
+   "runAfterFinish": true
+  }
+ }
+}

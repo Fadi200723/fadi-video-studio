@@ -1,0 +1,13 @@
+import {app,BrowserWindow,shell,Menu} from 'electron';import path from 'node:path';import {fileURLToPath} from 'node:url';import {start} from './server.js';
+const here=path.dirname(fileURLToPath(import.meta.url));let win;
+if(!app.requestSingleInstanceLock())app.quit();
+app.setName('Fadi Video Studio');
+app.whenReady().then(async()=>{const port=await start({port:0,dataDir:app.getPath('userData'),publicDir:path.join(here,'public')});
+ win=new BrowserWindow({width:1280,height:860,title:'Fadi Video Studio',icon:path.join(here,'build','icon.png'),webPreferences:{contextIsolation:true,nodeIntegration:false,sandbox:true}});
+ Menu.setApplicationMenu(null);
+ win.webContents.setWindowOpenHandler(({url})=>{shell.openExternal(url);return{action:'deny'}});
+ win.webContents.on('will-navigate',(e,u)=>{if(!u.startsWith(`http://127.0.0.1:${port}`)){e.preventDefault();shell.openExternal(u)}});
+ win.on('page-title-updated',e=>e.preventDefault());
+ await win.loadURL(`http://127.0.0.1:${port}/`)});
+app.on('second-instance',()=>{if(win){if(win.isMinimized())win.restore();win.focus()}});
+app.on('window-all-closed',()=>app.quit());
