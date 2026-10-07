@@ -1,7 +1,7 @@
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {Readable} from 'node:stream';import {fileURLToPath,pathToFileURL} from 'node:url';import {searchScene} from './engine.js';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const HOSTS=/^(upload\.wikimedia\.org|images\.pexels\.com|videos\.pexels\.com|cdn\.pixabay\.com|images\.unsplash\.com|images-assets\.nasa\.gov|api\.openverse\.org|live\.staticflickr\.com|([a-z0-9-]+\.)?archive\.org)$/;
-const KEYS=['ANTHROPIC_API_KEY','OPENAI_API_KEY','PEXELS_API_KEY','PIXABAY_API_KEY','UNSPLASH_API_KEY','FLICKR_API_KEY'];
+const KEYS=['GEMINI_API_KEY','ANTHROPIC_API_KEY','OPENAI_API_KEY','PEXELS_API_KEY','PIXABAY_API_KEY','UNSPLASH_API_KEY','FLICKR_API_KEY'];
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png'};
 const hits=new Map(),send=(r,c,o)=>{r.writeHead(c,{'content-type':'application/json'});r.end(JSON.stringify(o))};
 const rl=ip=>{const n=Date.now(),a=(hits.get(ip)||[]).filter(t=>n-t<6e4);a.push(n);hits.set(ip,a);return a.length<=120};
