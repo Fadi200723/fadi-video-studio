@@ -1,5 +1,6 @@
 import {app,BrowserWindow,shell,Menu} from 'electron';import path from 'node:path';import {fileURLToPath} from 'node:url';import {start} from './server.js';
 const here=path.dirname(fileURLToPath(import.meta.url));let win;
+process.on('uncaughtException',e=>console.error('uncaught:',e));process.on('unhandledRejection',e=>console.error('unhandled:',e));
 if(!app.requestSingleInstanceLock())app.quit();
 app.setName('Fadi Video Studio');
 app.whenReady().then(async()=>{const port=await start({port:0,dataDir:app.getPath('userData'),publicDir:path.join(here,'public')});
